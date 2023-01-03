@@ -1,0 +1,13 @@
+<div class="main-content">
+  <div class="car-container">
+    <div class="seat {{ seat.type }}" *ngFor="let seat of car.seats">
+      <ng-container *ngIf="seat.occupant === null">
+        <button class="add-button" (click)="addYourselfToSeat(seat.type)">
+          +
+        </button></ng-container
+      >
+      <ng-container *ngIf="seat.occupant === currentUser"> {{currentUser.name}}
+      <button class="add-button" (click)="removeYourselfFromSeat(seat.occupant)">-</button></ng-container>
+    </div>
+  </div>
+</div>
