@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {car1, users, SeatPosition, User} from '../constants';
+import {Component} from '@angular/core';
+import {Car, car1, SeatPosition, User, users,} from '../constants';
+import {NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-event',
@@ -7,13 +8,36 @@ import {car1, users, SeatPosition, User} from '../constants';
   styleUrls: ['./event.component.scss'],
 })
 export class EventComponent {
-  users = users;
-  car = car1;
-  currentUser = this.users[0];
+  users: User[] = users;
+  cars: Car[] = [car1, {...car1}];
+  currentUser: User = this.users[0];
+  carName: string = '';
+  needRide: User[] = [];
+  driveYourself: boolean = false;
+  additionalPassengers: boolean = false;
+  seatCount: number = 0;
+  startingTime: NgbTimeStruct = {hour: 13, minute: 15, second: 0};
+  additionalPassengerNames: string[] = [];
+  passengerName: string = '';
+  startingLocation: string = '';
 
-  addYourselfToSeat(type: SeatPosition): void {
-    this.car.seats = this.car.seats.map((seat) => {
+  constructor() {
+    this.cars.map((car) => {
+      car.seats.map((seat) => {
+        if (seat.type === 'driver') {
+          seat.occupant = this.users[1];
+        }
+      });
+    });
+  }
+
+  addYourselfToSeat(type: SeatPosition, car: Car): void {
+    car.seats = car.seats.map((seat) => {
       if (seat.type === type) {
+        this.currentUser.seated = true;
+        this.needRide = this.needRide.filter(
+          (user) => user !== this.currentUser
+        );
         return {
           ...seat,
           occupant: this.currentUser,
@@ -26,18 +50,27 @@ export class EventComponent {
     });
   }
 
-  removeYourselfFromSeat(occupant: User):void {
-    this.car.seats = this.car.seats.map(seat => {
-      if (occupant === this.currentUser) {
+  removeYourselfFromSeat(car: Car): void {
+    car.seats = car.seats.map((seat) => {
+      if (seat.occupant === this.currentUser) {
+        this.currentUser.seated = false;
         return {
           ...seat,
-          occupant: null
-        }
+          occupant: null,
+        };
       } else {
         return {
-          ...seat
-        }
+          ...seat,
+        };
       }
-    })
+    });
+  }
+
+  insertOrRemoveNeedRide() {
+    if (this.needRide.includes(this.currentUser)) {
+      this.needRide = this.needRide.filter((user) => user !== this.currentUser);
+    } else {
+      this.needRide.push(this.currentUser);
+    }
   }
 }

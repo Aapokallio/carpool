@@ -1,13 +1,40 @@
 <div class="main-content">
-  <div class="car-container">
-    <div class="seat {{ seat.type }}" *ngFor="let seat of car.seats">
-      <ng-container *ngIf="seat.occupant === null">
-        <button class="add-button" (click)="addYourselfToSeat(seat.type)">
-          +
-        </button></ng-container
-      >
-      <ng-container *ngIf="seat.occupant === currentUser"> {{currentUser.name}}
-      <button class="add-button" (click)="removeYourselfFromSeat(seat.occupant)">-</button></ng-container>
+  <ng-container *ngIf="cars.length === 0; else elseBlock">
+    <div>Tälle reissulle ei ole vielä lisätty yhtään autoa</div>
+  </ng-container>
+  <ng-template #elseBlock>
+    <div class="car-container" *ngFor="let car of cars">
+      <div class="car-title-container">{{ car.name }}</div>
+      <div class="seats-container">
+        <div class="seat {{ seat.type }}" *ngFor="let seat of car.seats">
+          <ng-container *ngIf="seat.occupant === currentUser">
+            {{ currentUser.name }}
+            <button (click)="removeYourselfFromSeat(car)">-</button>
+          </ng-container>
+          <ng-container *ngIf="seat.occupant === null">
+            <button
+              [disabled]="seat.occupant !== null || currentUser.seated"
+              class="add-button"
+              (click)="addYourselfToSeat(seat.type, car)">
+              +
+            </button>
+          </ng-container>
+          <ng-container *ngIf="seat.occupant && seat.occupant !== currentUser">
+            {{ seat.occupant.name }}
+          </ng-container>
+        </div>
+      </div>
     </div>
-  </div>
+  </ng-template>
+  <button
+    mat-raised-button
+    [disabled]="currentUser.seated"
+    (click)="insertOrRemoveNeedRide()">
+    {{
+    needRide.includes(currentUser)
+      ? "En tarvitse kyytiä enään"
+      : " Tarvitsen kyydin "
+    }}
+  </button>
+  <div *ngFor="let user of needRide">{{ user.name }}</div>
 </div>
