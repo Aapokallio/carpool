@@ -1,8 +1,23 @@
 .main-content {
   display: flex;
-  height: 100%;
   row-gap: 40px;
   column-gap: 40px;
+  flex-direction: row;
+  margin-left: 20px;
+
+  .passengers-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+    align-items: center;
+    width: 25%;
+    margin-right: 20px;
+
+    .passenger-list-container {
+      display: flex;
+    }
+
+  }
 
   .add-new-car-container {
     display: flex;
@@ -10,59 +25,70 @@
     row-gap: 20px;
   }
 
-  .car-container {
+  .cars-container {
+    width: 70%;
     display: flex;
-    border: 1px black solid;
-    width: 200px;
-    height: 400px;
+    row-gap: 10px;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
 
-    .car-title-container {
+    .car-container {
       display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+      border: 1px black solid;
+      height: 300px;
+      flex-direction: column;
 
-    .seats-container {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-evenly;
-      height: 90%;
-
-      .seat {
+      .car-title-container {
         display: flex;
-        height: 50px;
         align-items: center;
         justify-content: center;
-        border: 1px black solid;
+      }
 
-        .add-button {
-          width: 100%;
-          height: 100%;
-          font-size: 40px;
-        }
+      .seats-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 90%;
 
-        &.driver {
-          width: 40%;
-        }
+        .seat {
+          display: flex;
+          height: 50px;
+          align-items: center;
+          justify-content: center;
+          border: 1px black solid;
 
-        &.shotgun {
-          width: 40%;
-        }
+          .add-button {
+            width: 100%;
+            height: 100%;
+            font-size: 40px;
+          }
 
-        &.backseat1 {
-          width: 30%;
-        }
+          &.driver {
+            width: 40%;
+          }
 
-        &.backseat2 {
-          width: 30%;
-        }
+          &.shotgun {
+            width: 40%;
+          }
 
-        &.backseat3 {
-          width: 30%;
+          &.backseat1 {
+            width: 30%;
+          }
+
+          &.backseat2 {
+            width: 30%;
+          }
+
+          &.backseat3 {
+            width: 30%;
+          }
         }
       }
     }
   }
+
+
 }

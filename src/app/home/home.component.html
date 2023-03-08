@@ -1,0 +1,5 @@
+<button mat-raised-button routerLink="/create-trip"> Luo uusi reissu</button>
+<mat-form-field>
+  <input matInput autocomplete="off" [(ngModel)]="code">
+  <button (click)="tryCode()"> Reissun sivulle</button>
+</mat-form-field>

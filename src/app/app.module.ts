@@ -12,14 +12,21 @@ import {MatSelectModule} from '@angular/material/select';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatIconModule} from '@angular/material/icon';
 import {CreateCarComponent} from './create-car/create-car.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {CreateTripComponent} from "./create-trip/create-trip.component";
+import {HomeComponent} from './home/home.component';
+import {CdkDrag, CdkDropList, CdkDropListGroup} from "@angular/cdk/drag-drop";
+import {MatMenuModule} from "@angular/material/menu";
 
 const routes: Routes = [
+  {path: '', component: HomeComponent},
   {path: 'event', component: EventComponent},
   {path: 'create-car', component: CreateCarComponent},
+  {path: 'create-trip', component: CreateTripComponent}
 ];
 
 @NgModule({
-  declarations: [AppComponent, EventComponent, CreateCarComponent],
+  declarations: [AppComponent, EventComponent, CreateCarComponent, HomeComponent, CreateTripComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
@@ -32,6 +39,11 @@ const routes: Routes = [
     MatSelectModule,
     NgbModule,
     MatIconModule,
+    MatToolbarModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDropListGroup,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

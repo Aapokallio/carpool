@@ -1,0 +1,39 @@
+<div class="add-new-car-container">
+  <mat-form-field appearance="outline">
+    <mat-label>Auton nimi</mat-label>
+    <input [(ngModel)]="carName" autocomplete="off" matInput/>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Auton penkkien lukumäärä</mat-label>
+    <mat-select>
+      <mat-option
+        *ngFor="let number of [2, 3, 4, 5]"
+        (click)="seatCount = number"
+        [value]="number">
+        {{ number }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Lähtöpaikka</mat-label>
+    <input matInput [(ngModel)]="startingLocation"/>
+  </mat-form-field>
+  <div>
+    <div>Lähtöaika</div>
+    <ngb-timepicker
+      [minuteStep]="15"
+      [(ngModel)]="startingTime"></ngb-timepicker>
+  </div>
+  <button
+    mat-raised-button
+    [disabled]="
+        carName === '' ||
+        startingLocation === '' ||
+        seatCount === 0
+      "
+    (click)="addNewCar()">
+    Lisää uusi auto
+  </button>
+</div>
+
