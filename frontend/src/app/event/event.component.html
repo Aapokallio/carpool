@@ -1,0 +1,85 @@
+<ng-container *ngIf="trip$ | async as trip">
+  <div class="descriptioni">{{ trip.description }}</div>
+  <div class="main-content" cdkDropListGroup>
+    <ng-container *ngIf="trip.cars.length === 0; else elseBlock">
+      <div>Tälle reissulle ei ole vielä lisätty yhtään autoa</div>
+      <button mat-raised-button (click)="createCar()">Lisää uusi auto</button>
+    </ng-container>
+    <ng-template #elseBlock>
+      <div class="cars-container">
+        <div class="car-container" *ngFor="let car of trip.cars">
+          <div class="car-title-container">{{ car.name }}</div>
+          <div class="seats-container">
+            <div
+              class="seat {{ seat.type | lowercase }}"
+              *ngFor="let seat of car.seats"
+              [cdkDropListData]="{car,seat}"
+              (cdkDropListDropped)="drop($event)"
+              cdkDropList>
+              <ng-container *ngIf="seat.occupant">
+                {{ seat.occupant.name }}
+                <button (click)="removeFromSeat(seat)">-</button>
+              </ng-container>
+              <ng-container *ngIf="seat.occupant === null">
+                <button mat-button [matMenuTriggerFor]="menu">+</button>
+                <mat-menu #menu="matMenu">
+                  <button
+                    (click)="addPersonToSeatClick(passenger, seat)"
+                    *ngFor="
+                      let passenger of getUnseatedPassengers(trip.participants)
+                    "
+                    mat-menu-item>
+                    {{ passenger.name }}
+                  </button>
+                </mat-menu>
+              </ng-container>
+            </div>
+          </div>
+          <button mat-raised-button [disabled]="isCarEmpty(car)" (click)="removeCar(car.id)">
+            poista auto
+          </button>
+        </div>
+        <button mat-raised-button (click)="createCar()">Lisää uusi auto</button>
+      </div>
+      <div class="passengers-container">
+        Kyytiä vaille
+        <div
+          *ngFor="let passenger of trip.participants"
+          class="passenger-list-container"
+          cdkDropList
+          [cdkDropListData]="passenger"
+          (cdkDropListDropped)="drop($event)">
+          <div *ngIf="passenger.isSeated === false" cdkDrag>
+            {{ passenger.name }}
+            <button
+              class="delete-passenger-button"
+              (click)="deletePassenger(passenger.id)">
+              X
+            </button>
+          </div>
+        </div>
+        <button
+          *ngIf="addPassengerMode === false"
+          mat-raised-button
+          (click)="addPassengerMode = true">
+          Lisää matkustaja
+        </button>
+        <div *ngIf="addPassengerMode">
+          <mat-form-field>
+            <input
+              matInput
+              autocomplete="off"
+              autofocus="autofocus"
+              [(ngModel)]="newPassengerName"/>
+          </mat-form-field>
+          <button
+            mat-raised-button
+            [disabled]="isAlreadyInTrip(trip)"
+            (click)="addNewPassenger()">
+            +
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-container>

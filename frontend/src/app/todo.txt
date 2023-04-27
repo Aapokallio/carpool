@@ -1,0 +1,12 @@
+1. frontti ulkonäkö kuntoon
+2. bäkkäri pystyyn
+3. tietokanta pystyyn
+4. reititys kuntoon
+5. auton luonti yhdistetään bäkkäriin
+6. henkilön luonti bäkkäriin
+7. yhdistä tripin tiedot fronttiin, poista kovakoodattu/LS
+8. toiminnallisuus yhdistyy bäkkäriin (auton poisto/ henkilön poisto jne)
+9. luo trip tekee uuden tripin + luo random koodi tarkasta että kannassa ei samaa
+10. koodilla tripin löytäminen
+
+
